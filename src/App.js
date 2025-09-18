@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import Data from './component/Data/Data';
+import { useState, useEffect } from 'react';
+
+import {getWord} from './component/Functions/setData';
+
+import Line from './component/Line';
 
 function App() {
+  var [word, setWord] = useState("");
+  var [guesses, setGuesses] = useState(Array(6).fill(null));
+
+  useEffect(() => {
+    setWord(getWord(Data));
+  }, []);
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="board">
+        {guesses.map((guess, index) => (
+          <Line 
+            guess={guess ?? ''}
+          />
+        ))}
+
+      </div>
     </div>
   );
 }
