@@ -17,29 +17,42 @@ function App() {
   const [isGameOver, setIsGameOver] = useState(false)
 
   useEffect(()=>{
-    const handleType =(event)=>{
-      
-      handleKeypress(event, currentGuess, setCurrentGuess, solution, setIsGameOver, isGameOver)
+    const handleType =(event)=>{   
+      handleKeypress(
+        event, 
+        currentGuess, 
+        setCurrentGuess, 
+        solution, 
+        isGameOver,
+        setIsGameOver, 
+        guesses,
+        setGuesses
+      )
     }
     window.addEventListener('keydown', handleType)
 
     return () => window.removeEventListener('keydown', handleType)
-  }, [currentGuess, isGameOver, solution])
+  }, [currentGuess, isGameOver, solution, guesses])
 
   useEffect(() => {
     setSolution(getSolution(Data));
+    
   }, []);
 
   
   return (
     <div className="App">
       <div className="board">
+        {console.log(solution)}
+        
         {guesses.map((guess, index) => {
           const isCurrentGuess = index === guesses.findIndex(val => val == null)
           return(
             <Line 
               key={index}
               guess={isCurrentGuess ? currentGuess : guess ?? ''}
+              isFinal={!isCurrentGuess && guess !=null}
+              solution={solution}
             />
           )
         })}

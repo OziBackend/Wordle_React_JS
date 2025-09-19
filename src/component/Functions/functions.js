@@ -1,9 +1,9 @@
-const getSolution = async (Data) => {
+const getSolution = (Data) => {
     return Data[Math.floor(Math.random() * Data.length)];
 }
 
 const handleKeypress = (
-    event, currentGuess, setCurrentGuess, solution, setIsGameOver, isGameOver
+    event, currentGuess, setCurrentGuess, solution, isGameOver, setIsGameOver, guesses, setGuesses
 ) =>{
     if(isGameOver)
         return;
@@ -11,6 +11,11 @@ const handleKeypress = (
     if(event.key === 'Enter') {
         if(currentGuess.length !== 5)
             return;
+
+        const newGuesses = [...guesses]
+        newGuesses[guesses.findIndex(val=>val ==null)] = currentGuess
+        setGuesses(newGuesses)
+        setCurrentGuess('')
 
         const isCorrect = solution === currentGuess;
         if(isCorrect)
@@ -25,7 +30,9 @@ const handleKeypress = (
         return
     }
     
-    setCurrentGuess(oldguess=> oldguess + event.key)
+    const isLetter = event.key.match(/^[a-z]{1}$/) != null
+    if(isLetter)
+        setCurrentGuess(oldguess=> oldguess + event.key)
     
 }
 
