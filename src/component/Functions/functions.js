@@ -5,6 +5,7 @@ const getSolution = (Data) => {
 const handleKeypress = (
     event, currentGuess, setCurrentGuess, solution, isGameOver, setIsGameOver, guesses, setGuesses
 ) =>{
+    
     if(isGameOver)
         return;
 
@@ -17,7 +18,8 @@ const handleKeypress = (
         setGuesses(newGuesses)
         setCurrentGuess('')
 
-        const isCorrect = solution === currentGuess;
+        const isCorrect = solution === currentGuess.toUpperCase();
+        
         if(isCorrect)
             setIsGameOver(true)
     }
